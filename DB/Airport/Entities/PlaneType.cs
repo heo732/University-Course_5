@@ -1,4 +1,4 @@
-﻿namespace Airport
+﻿namespace Airport.Entities
 {
     public class PlaneType
     {

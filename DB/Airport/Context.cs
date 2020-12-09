@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Airport.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Airport
 {
@@ -6,9 +7,11 @@ namespace Airport
     {
         public DbSet<PlaneType> PlaneTypes { get; set; }
 
+        public DbSet<FlightType> FlightTypes { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseOracle(@"User Id=SYS; Password=admin; DBA Privilege=SYSDBA; Data Source=192.168.88.238/xe;");
+            optionsBuilder.UseOracle(@"User Id=SYS; Password=admin; DBA Privilege=SYSDBA; Data Source=localhost:1521/xe;");
         }
     }
 }

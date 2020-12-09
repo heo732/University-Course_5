@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace Airport
 {
@@ -6,7 +7,16 @@ namespace Airport
     {
         public static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            //using (var db = new Context())
+            //{
+            //    db.PlaneTypes.Add(new PlaneType { Value = "huge" });
+            //    db.SaveChanges();
+            //}
+
+            using (var db = new Context())
+            {
+                var planeTypes = db.PlaneTypes.ToList();
+            }
         }
     }
 }

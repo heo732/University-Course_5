@@ -15,15 +15,18 @@ namespace Airport.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Oracle:ValueGenerationStrategy", OracleValueGenerationStrategy.IdentityColumn)
-                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
+                .HasAnnotation("ProductVersion", "3.1.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             modelBuilder.Entity("Airport.PlaneType", b =>
                 {
                     b.Property<int>("PlaneTypeId")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("NUMBER(10)")
+                        .HasAnnotation("Oracle:ValueGenerationStrategy", OracleValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Value");
+                    b.Property<string>("Value")
+                        .HasColumnType("NVARCHAR2(2000)");
 
                     b.HasKey("PlaneTypeId");
 

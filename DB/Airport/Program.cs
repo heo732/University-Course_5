@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Airport.Entities;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Airport
 {
@@ -7,16 +9,27 @@ namespace Airport
     {
         public static void Main(string[] args)
         {
-            //using (var db = new Context())
-            //{
-            //    db.PlaneTypes.Add(new PlaneType { Value = "huge" });
-            //    db.SaveChanges();
-            //}
-
-            using (var db = new Context())
+            using (var context = new Context())
             {
-                var planeTypes = db.PlaneTypes.ToList();
+                //FillPlaneTypesAsync(context).GetAwaiter();
+                //var planeTypes = GetPlaneTypes(context);
+                //var result = Queries.Q1(context);
             }
+        }
+
+        public static async Task FillPlaneTypesAsync(Context context)
+        {
+            await context.PlaneTypes.AddRangeAsync(new List<PlaneType>
+            {
+                new PlaneType { Value = "Airbus" },
+                new PlaneType { Value = "Boeing" }
+            }).ConfigureAwait(false);
+            await context.SaveChangesAsync().ConfigureAwait(false);
+        }
+
+        public static List<PlaneType> GetPlaneTypes(Context context)
+        {
+            return context.PlaneTypes.ToList();
         }
     }
 }

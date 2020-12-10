@@ -2,7 +2,7 @@
 
 namespace Airport.Entities
 {
-    public class FlightType : BaseEntity
+    public class FlightState : BaseEntity
     {
         public List<Flight> Flights { get; set; } = new List<Flight>();
     }

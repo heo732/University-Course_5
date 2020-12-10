@@ -9,7 +9,7 @@ namespace Airport.Entities
 
         public string Name { get; set; }
 
-        DateTime Birthday { get; set; }
+        public DateTime Birthday { get; set; }
 
         public string Sex { get; set; }
 
@@ -25,7 +25,7 @@ namespace Airport.Entities
 
         public int BrigadeId { get; set; }
 
-        public Brigade Brigade { get; set; }
+        public Team Team { get; set; }
 
         public List<Administration> Administrations { get; set; } = new List<Administration>();
 

@@ -2,7 +2,7 @@
 
 namespace Airport.Entities
 {
-    public class Brigade : BaseEntity
+    public class Team : BaseEntity
     {
         public List<Employee> Employees { get; set; } = new List<Employee>();
 

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Airport.Entities
 {
     public class Plane
     {
+        [Key]
         public int Id { get; set; }
 
         public string Number { get; set; }
@@ -17,9 +19,9 @@ namespace Airport.Entities
 
         public int SeatsNumber { get; set; }
 
-        public int BrigadeId { get; set; }
+        public int TeamId { get; set; }
 
-        public Brigade Brigade { get; set; }
+        public Team Team { get; set; }
 
         public List<Flight> Flights { get; set; } = new List<Flight>();
 

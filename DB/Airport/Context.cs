@@ -17,7 +17,7 @@ namespace Airport
 
         public DbSet<Department> Departments { get; set; }
 
-        public DbSet<Brigade> Brigades { get; set; }
+        public DbSet<Team> Teams { get; set; }
 
         public DbSet<Route> Routes { get; set; }
 

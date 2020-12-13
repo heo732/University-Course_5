@@ -1,6 +1,7 @@
 ### Import ###
 import pandas
 import numpy
+import csv
 from fcmeans import FCM
 from enum import Enum
 from matplotlib import pyplot
@@ -29,13 +30,11 @@ def process_array(arr, n_clusters, label_x, label_y):
     pyplot.show()
     
 def dict_save_to_csv(dictionary, csv_file_name):
-    file = open(csv_file_name + ".csv", "w")
-    
-    file.write("Key,Value\n")
-    for key, value in dictionary.items():
-        file.write(str(key) + ",\"" + value + "\"\n")
-    
-    file.close()
+    with open(csv_file_name + ".csv", "w", newline = "") as csv_file:
+        writer = csv.writer(csv_file)
+        for key, value in dictionary.items():
+            writer.writerow([key, value])
+    csv_file.close()
 ### Functions ###
 
 ### Classes ###

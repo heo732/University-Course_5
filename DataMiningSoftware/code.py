@@ -81,6 +81,7 @@ a_1 = [] # platform <-> sales_global
 a_2 = [] # developer <-> score_user
 a_3 = [] # sales_na <-> platform
 a_4 = [] # score_critic <-> sales_global
+a_5 = [] # genre <-> rating
 for index, row in all_data.iterrows():
     platform_num = platform_value_to_num[row[Field.platform.value]]
     sales_global = row[Field.sales_global.value]
@@ -100,10 +101,15 @@ for index, row in all_data.iterrows():
         row[Field.score_critic.value],
         sales_global
     ])
+    a_5.append([
+        genre_value_to_num[row[Field.genre.value]],
+        rating_value_to_num[row[Field.rating.value]]
+    ])
 
 # Process arrays.
-process_array(a_1, 3, "Platform", "Global sales")
-process_array(a_2, 3, "Developer", "User score")
-process_array(a_3, 3, "NA sales", "Platform")
-process_array(a_4, 3, "Critic score", "Global sales")
+process_array(a_1, 3, Field.platform.value, Field.sales_global.value)
+process_array(a_2, 3, Field.developer.value, Field.score_user.value)
+process_array(a_3, 3, Field.sales_na.value, Field.platform.value)
+process_array(a_4, 3, Field.score_critic.value, Field.sales_global.value)
+process_array(a_5, 3, Field.genre.value, Field.rating.value)
 ### Main ###

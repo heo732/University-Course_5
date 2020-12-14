@@ -5,6 +5,7 @@ import csv
 from fcmeans import FCM
 from enum import Enum
 from matplotlib import pyplot
+from sklearn.mixture import GaussianMixture
 ### Import ###
 
 ### Functions ###
@@ -13,20 +14,20 @@ def column_to_dicts(data_frame_column):
     dict_value_to_num = dict([(value, key) for key, value in dict_num_to_value.items()])
     return dict_num_to_value, dict_value_to_num
     
-def process_array(arr, n_clusters, label_x, label_y):
-    arr = numpy.array(arr)
+def process_with_fcm(data, n_clusters, label_x, label_y):
+    data = numpy.array(data)
     fcm = FCM(n_clusters)
-    fcm.fit(arr)
+    fcm.fit(data)
     
     f, axes = pyplot.subplots(1, 2, figsize = (11, 5))
-    axes[0].scatter(arr[:, 0], arr[:, 1], alpha = .1)
-    axes[1].scatter(arr[:, 0], arr[:, 1], c = fcm.predict(arr), alpha = .1)
+    axes[0].scatter(data[:, 0], data[:, 1], alpha = .1)
+    axes[1].scatter(data[:, 0], data[:, 1], c = fcm.predict(data), alpha = .1)
     axes[1].scatter(fcm.centers[:, 0], fcm.centers[:, 1], marker = "s", s = 20, c = "r")
     
     axes[0].set_xlabel(label_x)
     axes[0].set_ylabel(label_y)
     
-    pyplot.savefig(label_x + " - " + label_y + ".png")
+    pyplot.savefig(label_x + " - " + label_y + "_FCM.png")
     pyplot.show()
     
 def dict_save_to_csv(dictionary, csv_file_name):
@@ -35,6 +36,24 @@ def dict_save_to_csv(dictionary, csv_file_name):
         for key, value in dictionary.items():
             writer.writerow([key, value])
     csv_file.close()
+    
+def process_with_gmm(data, label_x, label_y):
+    gmm = GaussianMixture(n_components=4)
+    gmm.fit(data)
+    
+    frame = pandas.DataFrame(data)
+    frame["cluster"] = gmm.predict(data)
+    frame.columns = ["Weight", "Height", "cluster"]
+
+    color=["blue", "green","cyan", "black"]
+    for k in range(0, 4):
+        data = frame[frame["cluster"] == k]
+        pyplot.scatter(data["Weight"], data["Height"], c = color[k])
+        
+    pyplot.xlabel(label_x)
+    pyplot.ylabel(label_y)
+    pyplot.savefig(label_x + " - " + label_y + "_GMM.png")
+    pyplot.show()
 ### Functions ###
 
 ### Classes ###
@@ -107,9 +126,9 @@ for index, row in all_data.iterrows():
     ])
 
 # Process arrays.
-process_array(a_1, 3, Field.platform.value, Field.sales_global.value)
-process_array(a_2, 3, Field.developer.value, Field.score_user.value)
-process_array(a_3, 3, Field.sales_na.value, Field.platform.value)
-process_array(a_4, 3, Field.score_critic.value, Field.sales_global.value)
-process_array(a_5, 3, Field.genre.value, Field.rating.value)
+process_with_fcm(a_1, 3, Field.platform.value, Field.sales_global.value)
+process_with_fcm(a_2, 3, Field.developer.value, Field.score_user.value)
+process_with_fcm(a_3, 3, Field.sales_na.value, Field.platform.value)
+process_with_gmm(a_4, Field.score_critic.value, Field.sales_global.value)
+process_with_gmm(a_5, Field.genre.value, Field.rating.value)
 ### Main ###
